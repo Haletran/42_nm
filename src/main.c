@@ -8,10 +8,6 @@
 #include <string.h>     // strerror
 #include "nm.h"
 
-typedef struct s_global {
-    int fds[10];
-}   t_global;
-
 // if no parameter given then it search for a a.out file in the current directory
 // else error
 // can take multiple parameter and output for each of them
