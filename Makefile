@@ -1,0 +1,33 @@
+ifndef VERBOSE
+MAKEFLAGS += --no-print-directory --silent
+endif
+
+NAME := ft_nm
+CC := clang
+CFLAGS := -Wextra -Wall -Werror -g
+
+SRCS = src/main.c
+
+SRC_DIR := src
+OBJS_DIR := obj
+OBJS    := $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
+
+all: $(NAME)
+
+$(OBJS_DIR)/%.o: %.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
+
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT_TARGET)
+	echo "Compiling\033[1m\033[32m" $@ "\033[0m"
+	echo "\033[42mSuccessfully compiled :)\033[0m"
+
+clean:
+	rm -rf $(OBJS_DIR)
+
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
