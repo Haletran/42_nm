@@ -38,14 +38,14 @@ int checkElfHeader(int fd, char *filename)
   Elf64_Ehdr *ehdr = (Elf64_Ehdr *)map;
   if (ehdr->e_ident[EI_CLASS] != ELFCLASS32 && ehdr->e_ident[EI_CLASS] != ELFCLASS64)
   {
-    printf("ft_nm: %s: file format not recognized\n", filename);
+    printf("nm: %s: file format not recognized\n", filename);
     return (1);
   }
   if (ehdr->e_ident[EI_MAG0] != ELFMAG0 ||
         ehdr->e_ident[EI_MAG1] != ELFMAG1 ||
         ehdr->e_ident[EI_MAG2] != ELFMAG2 ||
         ehdr->e_ident[EI_MAG3] != ELFMAG3) {
-    printf("ft_nm: %s: not a valid ELF header\n", filename);
+    printf("nm: %s: not a valid ELF header\n", filename);
     munmap(map, filesize);
     return (1);
   }
@@ -60,18 +60,18 @@ int parse_files(t_global *glob, char **argv)
     glob->fds[0] = open("a.out", O_RDONLY);
     if (glob->fds[0] == -1)
     {
-      ft_putstr_fd("ft_nm: 'a.out': No such file\n", 2);
+      ft_putstr_fd("nm: 'a.out': No such file\n", 2);
       return (1);
     }
   }
   for (int i = 1; argv[i]; i++) {
     glob->fds[i] = open(argv[i], O_RDONLY);
     if (glob->fds[i] == -1) {
-      ft_printf("ft_nm: '%s': No such file\n", argv[i]);
+      ft_printf("nm: '%s': No such file\n", argv[i]);
     }
     else if (isDirectory(glob->fds[i]))
     {
-      ft_printf("ft_nm: Warning: '%s' is a directory\n", argv[i]);
+      ft_printf("nm: Warning: '%s' is a directory\n", argv[i]);
       close(glob->fds[i]);
     }
     else if (checkElfHeader(glob->fds[i], argv[i]))
