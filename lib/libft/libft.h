@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: bapasqui <bapasqui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:40:33 by bapasqui          #+#    #+#             */
-/*   Updated: 2025/05/19 11:09:40 by bapasqui         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:12:36 by bapasqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include <stdlib.h>
 # include <stdarg.h>
-#include <unistd.h>
+# include <unistd.h>
+# include "../../includes/lst.h"
+
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -63,5 +65,11 @@ int  v_pointer(unsigned long long ptr, char *base);
 int  check_del(char format);
 int  check_identifier(int len, char format, va_list args);
 void	print_tab(char **tab);
+void	*ft_lst_new(int fd, char *program_name, int index);
+int	ft_lst_size(t_params *a);
+void	ft_lstadd_back(t_params **lst, int fd, char *program_name);
+void	ft_lst_add_front(t_params **a, t_params *new);
+
+
 
 #endif

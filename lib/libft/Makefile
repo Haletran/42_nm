@@ -14,7 +14,7 @@ OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 NAME = libft.a
 
@@ -55,6 +55,10 @@ SRCS =		ft_isalpha.c	\
 			ft_putnbr_fd.c \
 			ft_printf.c \
 			ft_printf_check.c \
+			ft_lst_add_back.c \
+			ft_lstnew.c \
+			ft_lst_add_front.c \
+			ft_lst_size.c \
 			print_tab.c \
 			ft_printf_utils.c
 
