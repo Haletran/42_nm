@@ -29,10 +29,12 @@ $(NAME): $(OBJS)
 	echo "\033[42mSuccessfully compiled :)\033[0m"
 
 clean:
+	@make -C $(LIBFT_DIR) clean
 	rm -rf $(OBJS_DIR)
 
 
 fclean: clean
+	@make -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
 
 re: fclean all
