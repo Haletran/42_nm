@@ -11,15 +11,20 @@ SRCS = src/main.c
 SRC_DIR := src
 OBJS_DIR := obj
 OBJS    := $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
+LIBFT_DIR := lib/libft/
+LIBFT_EXEC := lib/libft/libft.a
 
-all: $(NAME)
+all: libft $(NAME)
+
+libft:
+	@make -C $(LIBFT_DIR)
 
 $(OBJS_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT_TARGET)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT_EXEC)
 	echo "Compiling\033[1m\033[32m" $@ "\033[0m"
 	echo "\033[42mSuccessfully compiled :)\033[0m"
 
