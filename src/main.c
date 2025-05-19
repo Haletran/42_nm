@@ -47,15 +47,14 @@ int checkElfHeader(int fd, char *filename)
         ehdr->e_ident[EI_MAG3] != ELFMAG3) {
     printf("ft_nm: %s: not a valid ELF header\n", filename);
     munmap(map, filesize);
-    close(fd);
     return (1);
   }
+  munmap(map, filesize);
   return (0);
 }
 
 int parse_files(t_global *glob, char **argv)
 {
-  int nb_errors = 0;
   if (!argv[1])
   {
     glob->fds[0] = open("a.out", O_RDONLY);
@@ -76,9 +75,7 @@ int parse_files(t_global *glob, char **argv)
       close(glob->fds[i]);
     }
     else if (checkElfHeader(glob->fds[i], argv[i]))
-    {
-      nb_errors++;
-    }
+      close(glob->fds[i]);
     else {
         glob->parameters[glob->parameters_index] = ft_strdup(argv[i]);
         glob->parameters_index++;
@@ -87,16 +84,33 @@ int parse_files(t_global *glob, char **argv)
   return (0);
 }
 
+void close_fds(int *fds, int size)
+{
+    for (int i = 0; i < size; i++)
+        if (fds[i] >= 0)
+            close(fds[i]);
+}
+
+
 int main(int argc, char **argv)
 {
-  (void)argc;
+
+  // need to a linked list of all fds so that i can close all of them by indentifing the one that are open
+  // the linked will be like that : parameter, fd | so the fds that are still open for exec will be closed
   t_global *global = malloc(sizeof(t_global) * 1000);
   global->parameters = malloc(sizeof(char **) * argc - 1);
   global->parameters_index = 0;
   parse_files(global, argv);
-  if (global->parameters <= 0)
+  if (global->parameters_index <= 0)
+  {
+      free(global->parameters);
+      free(global);
       return (1);
+  }
   print_tab(global->parameters);
+  close_fds(global->fds, argc - 1);
+  free(global->parameters[0]); // need to do a loop to free all saved parameters
+  free(global->parameters);
   free(global);
   return (1);
 }

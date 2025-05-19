@@ -7,7 +7,9 @@ void	print_tab(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		ft_putstr_fd(tab[i], 1);
+		if (tab[i]) {
+			ft_putstr_fd(tab[i], 1);
+		}
 		i++;
 	}
 }
