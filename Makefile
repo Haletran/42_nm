@@ -6,7 +6,9 @@ NAME := ft_nm
 CC := clang
 CFLAGS := -Wextra -Wall -Werror -g
 
-SRCS = src/main.c
+SRCS = src/main.c \
+			 src/exec.c \
+			 src/utils.c
 
 SRC_DIR := src
 OBJS_DIR := obj
@@ -28,10 +30,12 @@ $(NAME): $(OBJS)
 	echo "Compiling\033[1m\033[32m" $@ "\033[0m"
 	echo "\033[42mSuccessfully compiled :)\033[0m"
 
+tester: re
+		@bash tester
+
 clean:
 	@make -C $(LIBFT_DIR) clean
 	rm -rf $(OBJS_DIR)
-
 
 fclean: clean
 	@make -C $(LIBFT_DIR) fclean

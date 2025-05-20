@@ -1,11 +1,18 @@
 #pragma once
-
 #include "../lib/libft/libft.h"
+#include "lst.h"
+#include <elf.h>
+#include <fcntl.h>    // open
+#include <stdio.h>    // perror
+#include <stdlib.h>   // malloc, free, exit
+#include <string.h>   // strerror
+#include <sys/mman.h> // mmap, munmap
+#include <sys/stat.h> // fstat
+#include <unistd.h>   // close, write, getpagesize
 
-typedef struct s_global {
-    int fds[10];
-    int parameters_index;
-    char **parameters;
-}   t_global;
-
-#define FORMAT_NOT_RECOGNIZED "nm: %s: file format not recognized"
+int isDirectory(int fd);
+int getFileSize(int fd);
+int checkElfHeader(int fd, char *filename);
+int parse_files(t_global *glob, char **argv);
+int execute(t_global *global);
+int ft_strsize(char **str);

@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+## OPTI
+LC_ALL=C
+LANG=C
+
+## COLORS
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+nb_test=0
+
+cmp_results() {
+  printf "TEST %d : ./ft_nm %s " "$nb_test" "$*"
+
+  nm "$@" > nm.txt 2>&1
+  ./ft_nm "$@" > ft.txt 2>&1
+  if diff <(sort nm.txt) <(sort ft.txt) > /dev/null; then
+    echo -e "[ ${GREEN}OK${NC} ]"
+  else
+    echo -e "[ ${RED}KO${NC} ]"
+    #diff <(sort nm.txt) <(sort ft.txt)
+  fi
+
+  ((nb_test++))
+  rm -f nm.txt ft.txt
+}
+
+echo -e "---NM TESTER---"
+## PARSING TESTS
+
+cmp_results asd
+cmp_results asd asd
+cmp_results
+cmp_results README.md
+cmp_results README.md asd
+cmp_results asd asd asd asd
+cmp_results /usr/libexec/accounts-daemon
+
+## EXECUTION TESTS
+cmp_results ft_nm
+cmp_results ft_nm ft_nm
+cmp_results /usr/lib/libmono-2.0.a
+
