@@ -33,6 +33,11 @@ $(NAME): $(OBJS)
 tester: re
 		@bash tester
 
+nm-tester:
+		@git clone https://github.com/jemercie/nm_tester.git
+		@cd nm_tester && bash run && bash run memory
+		@rm -rf nm_tester
+
 clean:
 	@make -C $(LIBFT_DIR) clean
 	rm -rf $(OBJS_DIR)
