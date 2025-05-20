@@ -49,6 +49,26 @@ Here is those that we need to handle :
 - SHF_ALLOC means section is allocated in memory (like .rodata) → r (if local, read-only)
 - STB_WEAK is symbol binding for weak symbols → w
 
+To match `nm` more closely : 
+
+- Parse both SHT_SYMTAB and SHT_DYNSYM
+- For each symbol:
+    - Handle `STB_GLOBAL, STB_LOCAL, STB_WEAK`
+    - Check st_shndx for `SHN_UNDEF, SHN_ABS, SHN_COMMON`
+    - Map to section headers if st_shndx is a valid index
+    From section flags and type, deduce:
+        - T/t → executable (SHF_EXECINSTR)
+        - D/d → writable (SHF_WRITE)
+        - B/b → SHT_NOBITS
+        - R/r → SHT_PROGBITS without exec/write
+    - Weak symbols: W/w
+    - Undefined symbols: U
+    - Versioned symbols: print as is (from string table)
+- Sort the symbols by value or name if you want to mimic nm’s default behavior.
+
+`nm` command only use `.symtab` (SHT_SYMTAB) static symbols, no `.dynsym` (SHT_DYNSYM) dynamic linker symbols
+only if `nm -D`
+
 ## USEFUL LINKS 
 
 - https://gist.github.com/x0nu11byt3/bcb35c3de461e5fb66173071a2379779

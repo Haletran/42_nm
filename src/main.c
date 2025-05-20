@@ -43,7 +43,7 @@ int main(int argc, char **argv)
       free(global);
       return (1);
   }
-  print_params_list(global->params);
+  //print_params_list(global->params);
   execute(global);
   free_params(global->params);
   free(global);
