@@ -30,16 +30,17 @@ cmp_results() {
 echo -e "---NM TESTER---"
 ## PARSING TESTS
 
+echo -e "\n-> Parsing tests"
 cmp_results asd
 cmp_results asd asd
 cmp_results
 cmp_results README.md
 cmp_results README.md asd
 cmp_results asd asd asd asd
-cmp_results /usr/libexec/accounts-daemon
 
-## EXECUTION TESTS
+echo -e "\n-> Execution tests"
+cmp_results /usr/libexec/accounts-daemon
 cmp_results ft_nm
 cmp_results ft_nm ft_nm
 cmp_results /usr/lib/libmono-2.0.a
-
+echo "---------------"
